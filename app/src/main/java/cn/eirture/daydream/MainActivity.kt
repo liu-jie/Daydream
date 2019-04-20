@@ -1,14 +1,45 @@
 package cn.eirture.daydream
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.OrientationEventListener
 import java.util.*
+import java.util.function.Consumer
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mOrientationEventListener: OrientationEventListener
+
+    private fun getOrientation(v: Int) = when (v) {
+        in 0..30 -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        in 60..120 -> ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+//        in 150..210 -> ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+        in 240..300 -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        in 330..360 -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        else -> null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
+        mOrientationEventListener = MyOrientationEventListener(this, Consumer {
+            val newOrientation = getOrientation(it)
+            if (newOrientation != null) {
+                requestedOrientation = newOrientation
+            }
+        })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mOrientationEventListener.enable()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mOrientationEventListener.disable()
     }
 
     private fun getDateStr(): String {
@@ -19,5 +50,4 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private val WEEK_STRINGS = arrayListOf("周日", "周一", "周二", "周三", "周四", "周五", "周六")
     }
-
 }

@@ -1,6 +1,5 @@
 package cn.eirture.daydream
 
-import android.provider.Settings
 import android.service.dreams.DreamService
 
 class RobotDaydream : DreamService() {
