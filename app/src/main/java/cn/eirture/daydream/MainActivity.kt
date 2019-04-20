@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             if (newOrientation != null) {
                 requestedOrientation = newOrientation
                 tvClock.textSize =
-                    if (newOrientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT) 100f else 160f
+                    if (newOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) 100f else 160f
             }
         })
     }
