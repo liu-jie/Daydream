@@ -1,2 +1,2 @@
 # Daydream
-Simple application for Time Daydream
+A simple application of daydream
